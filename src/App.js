@@ -11,7 +11,8 @@ import {
 
 //import axios from "axios";
 
-
+import request from 'request-promise'
+//import Bottleneck from 'bottleneck'
 
 function App() {
 
@@ -55,27 +56,64 @@ function App() {
         setText(text);
         await worker.terminate();
 
-        const accessToken = '7752~kyvtyeWw0Nh0eTtulblCmrsjmOv4ShH1pHJ7lihJ9jjei4eLp6Dfea55kwXnmGKs';
+        const token = '7752~kyvtyeWw0Nh0eTtulblCmrsjmOv4ShH1pHJ7lihJ9jjei4eLp6Dfea55kwXnmGKs';
 
+        const url = 'http://localhost:8010/proxy/api/v1/courses/77520000000022705/assignments/77520000000358453/submissions/update_grades';
+
+ /*       const requestObj = url => ({
+            'method': 'POST',
+            'mode': 'no-cors', 
+            'uri': url,
+            'json': true,
+            'resolveWithFullResponse': true,
+            'headers': {
+              'Authorization': 'Bearer ' + token
+            }
+          })
+          
+        const fetch = url => request(requestObj(url))
+            .then(response => response.body)
+*/
+//const token = process.env.CANVAS_API_TOKEN
+
+//const body = { "grade_data":{      "77520000000078275":{         "posted_grade":1       } }};
+
+    const body = "grade_data[77520000000078275][posted_grade]=1";
+
+    const postRequest = (url, body) => request({
+    'method': 'POST',
+    'Accept': '*/*',
+    'Access-Control-Allow-Origin' : '*',
+    'uri': url,
+    'json': true,
+    'form': body,
+    'headers': {
+        'Authorization': 'Bearer ' + token
+    }
+    }).then(response => response).catch(err => console.log(err))      
+
+    let result = postRequest(url, body);
+
+    console.log(result);
+/*
         const requestOptions = {
             method: 'POST',
-            mode: 'no-cors', 
+            mode: 'no-cors', */
             /*access_token: '7752~kyvtyeWw0Nh0eTtulblCmrsjmOv4ShH1pHJ7lihJ9jjei4eLp6Dfea55kwXnmGKs',
             token_type: 'Bearer',*/
-            headers: {'WWW-Authorization': `Basic $s` % accessToken, 
+ //           headers: {'WWW-Authorization': `Basic $s` % accessToken, 
                       /*"AccessToken": "7752~kyvtyeWw0Nh0eTtulblCmrsjmOv4ShH1pHJ7lihJ9jjei4eLp6Dfea55kwXnmGKs",*/
-                      Accept: "*/*",
-                      "Content-Type": "text/html",
-                      "Access-Control-Allow-Origin" : "*", 
-                      "Access-Control-Allow-Credentials" : true },
-            body: JSON.stringify( { "grade_data":{      "77520000000078275":{         "posted_grade":1       } }})
-        };
-        const response = await fetch('https://canvas.instructure.com/api/v1/courses/77520000000022705/assignments/77520000000358453/submissions/update_grades', requestOptions);
-        if (!response.ok) {
-            throw new Error('Failed to post');
-        }
-    };
-
+ //                     Accept: "*/*",
+/////                      "Content-Type": "text/html",
+     //                 "Access-Control-Allow-Origin" : "*", 
+       //               "Access-Control-Allow-Credentials" : true },
+         //   body: JSON.stringify( { "grade_data":{      "77520000000078275":{         "posted_grade":1       } }})
+     //   };
+     //   const response = await fetch('https://canvas.instructure.com/api/v1/courses/77520000000022705/assignments/77520000000358453/submissions/update_grades', requestOptions);
+    //    if (!response.ok) {
+    //        throw new Error('Failed to post');
+   //     }
+   };
 
     const getUploadParams = () => {
         return {

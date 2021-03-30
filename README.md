@@ -9,10 +9,7 @@ This is a react app that connects Boom Cards to Canvas by allowing students to u
 
 ### Installation:
 
-````
-npx create-react-app react-ocr
-cd react-ocr
-npm start
+```
 npm install --save bootstrap react-dropzone-uploader
 ```
 Import the following in src/index.js
