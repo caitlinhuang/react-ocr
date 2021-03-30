@@ -15,7 +15,7 @@ cd react-ocr
 npm start
 npm install --save bootstrap react-dropzone-uploader
 ```
-et importer les fichier de style dans le fichier `src/index.js` 
+Import the following in src/index.js
 
 ```
 import 'bootstrap/dist/css/bootstrap.css';
